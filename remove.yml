@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  gather_facts: false
+
+  vars:
+    ansible_python_interpreter: '{{ ansible_playbook_python }}'
+    namespace: testing
+    service_name: helloworld
+
+  tasks:
+    - name: Remove Kubernetes components.
+      include_tasks: k8s_delete.yml

@@ -1,0 +1,4 @@
+- name: Expose "{{ service_name }}" on the host via kubectl port-forward.
+  command: kubectl port-forward -n "{{ namespace }}" service/"{{ service_name }}" "{{ service_port }}":"{{ service_port }}"
+  async: 45
+  poll: 0

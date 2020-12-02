@@ -1,0 +1,22 @@
+---
+- hosts: localhost
+  gather_facts: false
+
+  vars:
+    ansible_python_interpreter: '{{ ansible_playbook_python }}'
+    image_name: registry.gitlab.com/busecolak/nodejs-hello-world
+    namespace: testing
+    service_name: helloworld
+    service_port: 11130
+
+  pre_tasks:
+    - name: Ensure Minikube is up.
+      include_tasks: minikube.yml
+
+  tasks:
+    - name: Create Kubernetes resources.
+      include_tasks: k8s_deploy.yml
+    
+  post_tasks:
+    - name: Expose application.
+      include_tasks: k8s_expose.yml
