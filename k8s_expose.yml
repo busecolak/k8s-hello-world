@@ -1,3 +1,19 @@
+- name: Wait till the pod is running for "{{ service_name }}"
+  k8s_info:
+    kind: Pod
+    namespace: "{{ namespace }}"
+    label_selectors:
+      - "app={{ service_name }}"
+    wait: yes
+    wait_timeout: 300
+    wait_condition:
+      type: Ready
+      status: 'True'   
+  register: pods
+
+- debug:
+    msg: "Pod Name: {{ pods['resources'][0]['metadata']['name'] }}"
+
 - name: Expose "{{ service_name }}" on the host via kubectl port-forward.
   command: kubectl port-forward -n "{{ namespace }}" service/"{{ service_name }}" "{{ service_port }}":"{{ service_port }}"
   async: 45
