@@ -34,3 +34,7 @@ Once you're finished testing the Nodejs Hello World app in the Kubernetes cluste
     ansible-playbook -i inventory remove.yml
 
 The above commands assume you have `kubectl` installed.
+
+To list k8s cluster resource, you can run following command:
+
+    python list_resources.py <namespace>s
