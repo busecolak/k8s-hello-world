@@ -1,0 +1,31 @@
+- name: Remove "{{ service_name }}" Service object
+  k8s:
+    state: absent
+    api_version: v1
+    kind: Service
+    namespace: "{{ namespace }}"
+    name: "{{ service_name }}"
+
+- name: Remove "{{ service_name }}" Deployment object
+  k8s:
+    state: absent
+    api_version: v1
+    kind: Deployment
+    namespace: "{{ namespace }}"
+    name: "{{ service_name }}"
+
+- name: Remove "{{ service_name }}" Ingress object
+  k8s:
+    state: absent
+    api_version: networking.k8s.io/v1beta1
+    kind: Ingress
+    namespace: "{{ namespace }}"
+    name: "{{ service_name }}"
+
+- name: Remove "{{ service_name }}" HorizontalPodAutoscaler object
+  k8s:
+    state: absent
+    api_version: autoscaling/v2beta2
+    kind: HorizontalPodAutoscaler
+    namespace: "{{ namespace }}"
+    name: "{{ service_name }}"

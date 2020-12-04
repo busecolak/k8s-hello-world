@@ -1,0 +1,15 @@
+- name: Check Minikube's status.
+  command: minikube status
+  register: minikube_status
+  changed_when: false
+  ignore_errors: true
+
+- name: Start Minikube if it's not running.
+  command: minikube start
+  when: "not minikube_status.stdout or 'Running' not in minikube_status.stdout"
+
+- name: Enable Minikube metrics-server.
+  command: minikube addons enable metrics-server
+
+- name: Enable Minikube ingress.
+  command: minikube addons enable ingress

@@ -6,7 +6,8 @@
     ansible_python_interpreter: '{{ ansible_playbook_python }}'
     namespace: testing
     service_name: helloworld
+    service_port: 11130
 
   tasks:
-    - name: Remove Kubernetes components.
-      include_tasks: tasks/k8s_delete.yml
+    - name: Expose application.
+      include_tasks: tasks/k8s_expose.yml

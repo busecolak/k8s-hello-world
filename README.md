@@ -1,7 +1,14 @@
 # k8s-hello-world
 ## Automation for the Nodejs Hello World app
 
-This folder contains the Ansible playbook used to automate all the manual steps in building and deploying the example [Nodejs Hello World app](https://github.com/busecolak/nodejs-hello-world).
+This folder contains the Ansible playbook used to automate all the manual steps in deploying the example [Nodejs Hello World app](https://github.com/busecolak/nodejs-hello-world).
+
+The main playbook will create the following k8s resources with given service_name (default: helloworld) in given namespace (default: testing).
+
+* Deployment
+* Service
+* Ingress
+* HPA objects (using build-in CPU metric)
 
 ## Usage
 
@@ -17,6 +24,10 @@ You will also need to install a Python dependencies via Python Pip:
 Once they are installed, you can run the playbook with:
 
     ansible-playbook -i inventory main.yml
+
+To expose service on localhost:11130, you can run following command:
+
+    ansible-playbook -i inventory expose.yml
 
 Once you're finished testing the Nodejs Hello World app in the Kubernetes cluster, you can run the following commands to delete the necessary resources:
 

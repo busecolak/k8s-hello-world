@@ -14,7 +14,7 @@
 - debug:
     msg: "Pod Name: {{ pods['resources'][0]['metadata']['name'] }}"
 
-- name: Expose "{{ service_name }}" on the host via kubectl port-forward.
+- name: Expose "{{ service_name }}" on the host via kubectl port-forward for one hour.
   command: kubectl port-forward -n "{{ namespace }}" service/"{{ service_name }}" "{{ service_port }}":"{{ service_port }}"
-  async: 45
+  async: 3600
   poll: 0

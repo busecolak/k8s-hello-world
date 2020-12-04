@@ -11,12 +11,11 @@
 
   pre_tasks:
     - name: Ensure Minikube is up.
-      include_tasks: minikube.yml
+      include_tasks: tasks/minikube.yml
 
   tasks:
     - name: Create Kubernetes resources.
-      include_tasks: k8s_deploy.yml
-    
-  post_tasks:
-    - name: Expose application.
-      include_tasks: k8s_expose.yml
+      include_tasks: tasks/k8s_deploy.yml
+
+    - name: Create Kubernetes HorizontalPodAutoscaler resource.
+      include_tasks: tasks/k8s_autoscale.yml

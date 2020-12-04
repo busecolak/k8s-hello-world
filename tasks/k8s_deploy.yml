@@ -30,6 +30,10 @@
               imagePullPolicy: Always
               ports:
               - containerPort: "{{ service_port }}"
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 100Mi
 
 - name: Create a Service for "{{ service_name }}".
   k8s:
@@ -47,3 +51,23 @@
           targetPort: "{{ service_port }}"
         selector:
           app: "{{ service_name }}"
+
+- name: Create a Ingress for "{{ service_name }}".
+  k8s:
+    state: present
+    definition:
+      apiVersion: networking.k8s.io/v1beta1
+      kind: Ingress
+      metadata:
+        name: "{{ service_name }}"
+        namespace: "{{ namespace }}"
+        annotations:
+          kubernetes.io/ingress.class: "nginx"
+      spec:
+        rules:
+        - http:
+            paths:
+            - path: /
+              backend:
+                serviceName: "{{ service_name }}"
+                servicePort: "{{ service_port }}"
